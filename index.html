@@ -11,7 +11,7 @@
   <style>
     :root {
       --gold: rgba(255,255,255,0.07);
-      --border: rgba(255,255,255,0.12);
+      --border: rgba(255,255,255,0.22);
       --text-dim: rgba(255,255,255,0.45);
     }
 
@@ -67,7 +67,7 @@
 
     .logo-sub {
       font-family: 'Montserrat', sans-serif;
-      font-weight: 300;
+      font-weight: 400;
       font-size: 0.6rem;
       letter-spacing: 0.42em;
       text-transform: uppercase;
@@ -81,7 +81,7 @@
       width: 100%;
       height: 60px;
       border-radius: 999px;
-      border: 1px solid var(--border);
+      border: 1.5px solid var(--border);
       background: rgba(255,255,255,0.03);
       text-decoration: none;
       color: #fff;
@@ -129,9 +129,7 @@
       flex: 1;
       text-align: center;
       font-family: 'Montserrat', sans-serif;
-      font-weight: 300;
-      font-size: 0.72rem;
-      letter-spacing: 0.22em;
+      font-weight: 400;
       text-transform: uppercase;
       color: rgba(255,255,255,0.78);
       padding-right: 12px;
@@ -142,7 +140,7 @@
       position: relative;
       border-radius: 32px;
       overflow: hidden;
-      border: 1px solid var(--border);
+      border: 1.5px solid var(--border);
       aspect-ratio: 4/5;
       background: #0a0a0a;
     }
@@ -208,7 +206,7 @@
 
     .text-line-sm {
       font-family: 'Montserrat', sans-serif;
-      font-weight: 200;
+      font-weight: 300;
       font-size: 0.78rem;
       letter-spacing: 0.28em;
       text-transform: uppercase;
@@ -253,9 +251,7 @@
 
     .loc-text {
       font-family: 'Montserrat', sans-serif;
-      font-weight: 300;
-      font-size: 0.62rem;
-      letter-spacing: 0.44em;
+      font-weight: 400;
       text-transform: uppercase;
       color: var(--text-dim);
     }
@@ -298,6 +294,14 @@
       <span class="btn-label">Peça pelo WhatsApp</span>
     </a>
 
+    <button class="btn-social" id="pixBtn" onclick="copyPix()" style="cursor:pointer;width:100%;border:1.5px solid var(--border);">
+      <span class="btn-icon">
+        <img src="https://2i1d0j2eaz.ufs.sh/f/VhhRAJChvXTstoo7xCQnXj20TLSHVpei9oGYrJK8PUDld3sx" alt="Pix" width="22" height="22" style="object-fit:contain;" />
+      </span>
+      <span class="btn-divider"></span>
+      <span class="btn-label" id="pixLabel">Copiar chave Pix</span>
+    </button>
+
   </div>
 
   <!-- ── Carousel ── -->
@@ -305,12 +309,12 @@
     <div class="carousel-track" id="carouselTrack">
 
       <div class="carousel-slide">
-        <img src="https://i.imgur.com/xZt7eWF.jpeg" alt="Brigadeiros gourmet" loading="eager" />
+        <img src="https://2i1d0j2eaz.ufs.sh/f/VhhRAJChvXTshK8PIq5xDLfdBpsklrE0QP6Ra9neA8NFv3Ct" alt="Brigadeiros gourmet" loading="eager" />
         <div class="carousel-overlay"></div>
       </div>
 
       <div class="carousel-slide">
-        <img src="https://i.imgur.com/wOmrRLn.jpeg" alt="Brigadeiros gourmet" loading="lazy" />
+        <img src="https://2i1d0j2eaz.ufs.sh/f/VhhRAJChvXTs5B6WzswJR8qeUj64HBIbyrcloW7pmAZx1dK3" alt="Brigadeiros gourmet" loading="lazy" />
         <div class="carousel-overlay"></div>
       </div>
 
@@ -345,6 +349,31 @@
 
 </main>
 
+<!-- ── Toast ── -->
+<div id="toast" style="
+  position: fixed;
+  bottom: 32px;
+  left: 50%;
+  transform: translateX(-50%) translateY(20px);
+  background: rgba(255,255,255,0.1);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255,255,255,0.18);
+  color: #fff;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 400;
+  font-size: 0.72rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  padding: 14px 28px;
+  border-radius: 999px;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.35s ease, transform 0.35s ease;
+  white-space: nowrap;
+  z-index: 999;
+">Chave Pix copiada!</div>
+
 <script>
   (function () {
     const track   = document.getElementById('carouselTrack');
@@ -354,7 +383,6 @@
     let current   = 0;
     let timer;
 
-    // Build dots
     slides.forEach((_, i) => {
       const d = document.createElement('span');
       d.className = 'dot' + (i === 0 ? ' active' : '');
@@ -377,7 +405,6 @@
       timer = setInterval(next, 4000);
     }
 
-    // Touch / swipe
     let startX = 0;
     track.addEventListener('touchstart', e => {
       startX = e.touches[0].clientX;
@@ -392,6 +419,19 @@
 
     startTimer();
   })();
+
+  let toastTimer;
+  function copyPix() {
+    navigator.clipboard.writeText('4b716515-77c5-4b4e-aec0-1efb40c896e8');
+    const toast = document.getElementById('toast');
+    clearTimeout(toastTimer);
+    toast.style.opacity = '1';
+    toast.style.transform = 'translateX(-50%) translateY(0)';
+    toastTimer = setTimeout(() => {
+      toast.style.opacity = '0';
+      toast.style.transform = 'translateX(-50%) translateY(20px)';
+    }, 3000);
+  }
 </script>
 
 </body>
