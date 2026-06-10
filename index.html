@@ -446,33 +446,6 @@
       toast.style.transform = 'translateX(-50%) translateY(20px)';
     }, 3000);
   }
-
-  // ── Modal ──
-  (function () {
-    const STORAGE_KEY = 'melliculus_modal_closed';
-    const DAYS = 30;
-
-    const closed = localStorage.getItem(STORAGE_KEY);
-    if (closed && Date.now() < parseInt(closed)) return;
-
-    const modal = document.getElementById('promoModal');
-
-    // Show after small delay
-    setTimeout(() => {
-      modal.style.opacity = '1';
-      modal.style.pointerEvents = 'auto';
-    }, 600);
-
-    document.getElementById('modalClose').addEventListener('click', closeModal);
-    modal.addEventListener('click', (e) => { if (e.target === modal) closeModal(); });
-
-    function closeModal() {
-      modal.style.opacity = '0';
-      modal.style.pointerEvents = 'none';
-      const expiry = Date.now() + DAYS * 24 * 60 * 60 * 1000;
-      localStorage.setItem(STORAGE_KEY, expiry);
-    }
-  })();
 </script>
 
 <!-- ── Promo Modal ── -->
@@ -526,6 +499,33 @@
     />
   </div>
 </div>
+
+<script>
+  (function () {
+    const STORAGE_KEY = 'melliculus_modal_closed';
+    const DAYS = 30;
+
+    const closed = localStorage.getItem(STORAGE_KEY);
+    if (closed && Date.now() < parseInt(closed)) return;
+
+    const modal = document.getElementById('promoModal');
+
+    setTimeout(() => {
+      modal.style.opacity = '1';
+      modal.style.pointerEvents = 'auto';
+    }, 600);
+
+    document.getElementById('modalClose').addEventListener('click', closeModal);
+    modal.addEventListener('click', (e) => { if (e.target === modal) closeModal(); });
+
+    function closeModal() {
+      modal.style.opacity = '0';
+      modal.style.pointerEvents = 'none';
+      const expiry = Date.now() + DAYS * 24 * 60 * 60 * 1000;
+      localStorage.setItem(STORAGE_KEY, expiry);
+    }
+  })();
+</script>
 
 </body>
 </html>
