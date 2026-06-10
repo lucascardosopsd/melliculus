@@ -446,7 +446,86 @@
       toast.style.transform = 'translateX(-50%) translateY(20px)';
     }, 3000);
   }
+
+  // ── Modal ──
+  (function () {
+    const STORAGE_KEY = 'melliculus_modal_closed';
+    const DAYS = 30;
+
+    const closed = localStorage.getItem(STORAGE_KEY);
+    if (closed && Date.now() < parseInt(closed)) return;
+
+    const modal = document.getElementById('promoModal');
+
+    // Show after small delay
+    setTimeout(() => {
+      modal.style.opacity = '1';
+      modal.style.pointerEvents = 'auto';
+    }, 600);
+
+    document.getElementById('modalClose').addEventListener('click', closeModal);
+    modal.addEventListener('click', (e) => { if (e.target === modal) closeModal(); });
+
+    function closeModal() {
+      modal.style.opacity = '0';
+      modal.style.pointerEvents = 'none';
+      const expiry = Date.now() + DAYS * 24 * 60 * 60 * 1000;
+      localStorage.setItem(STORAGE_KEY, expiry);
+    }
+  })();
 </script>
+
+<!-- ── Promo Modal ── -->
+<div id="promoModal" style="
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.88);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.5s ease;
+  padding: 24px;
+">
+  <div style="position:relative;max-width:460px;width:100%;">
+    <!-- Close button -->
+    <button id="modalClose" style="
+      position: absolute;
+      top: -16px;
+      right: -16px;
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: #000;
+      border: 1.5px solid rgba(255,255,255,0.2);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      z-index: 10;
+      transition: background 0.2s;
+    " onmouseover="this.style.background='#222'" onmouseout="this.style.background='#000'">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round">
+        <line x1="18" y1="6" x2="6" y2="18"/>
+        <line x1="6" y1="6" x2="18" y2="18"/>
+      </svg>
+    </button>
+    <!-- Image -->
+    <img
+      src="https://2i1d0j2eaz.ufs.sh/f/VhhRAJChvXTs5sZQ5UJR8qeUj64HBIbyrcloW7pmAZx1dK3C"
+      alt="Promoção Melliculus"
+      style="
+        width: 100%;
+        height: auto;
+        display: block;
+        border-radius: 24px;
+        object-fit: contain;
+      "
+    />
+  </div>
+</div>
 
 </body>
 </html>
